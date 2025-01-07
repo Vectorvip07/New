@@ -2,44 +2,45 @@ format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 meta:
-  bitrise.io:
-    stack: linux-docker-android-22.04
+  bitrise.io:
+    stack: linux-docker-android-22.04
 workflows:
-  custom_workflow:
-    summary: Run custom commands to set up the environment and execute the program.
-    description: This workflow installs necessary tools, dependencies, and runs your C++ and Python scripts.
-    steps:
-    # Step to activate SSH key if provided
-   - activate-ssh-key@4:
-    run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+  custom_workflow:
+    summary: Run custom commands to set up the environment and execute the program.
+    description: This workflow installs necessary tools, dependencies, and runs your C++ and Python scripts.
+    steps:
+      # Step to activate SSH key if provided
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
 
-    # Step to clone the repository
-    - git-clone@8:
-        inputs:
-          repository_url: https://github.com/Vectorvip07/New.git
+      # Step to clone the repository
+      - git-clone@8:
+          inputs:
+            repository_url: https://github.com/Vectorvip07/New.git
 
-    # Step to execute custom commands
-    - script@1:
-        inputs:
-        - content: |
-            # Navigate to the repository
-            cd New
+      # Step to execute custom commands
+      - script@1:
+          inputs:
+            - content: |
+                # Navigate to the repository
+                cd New
 
-            # Update system packages
-            sudo apt-get update -y
-            
-            # Install necessary tools
-            sudo apt-get install -y g++
-            sudo apt-get install -y python3-pip
-            gcc soul.c -o soul -lpthread
-            # Install Python dependencies
-            pip3 install telebot pymongo aiohttp
-            
-            # Add execute permissions to the binary
-            chmod +x soul
-            
-            
+                # Update system packages
+                sudo apt-get update -y
+                
+                # Install necessary tools
+                sudo apt-get install -y g++
+                sudo apt-get install -y python3-pip
 
-            # Run the Python script
-            python3 soul.py
+                # Compile the C program
+                gcc soul.c -o soul -lpthread
 
+                # Install Python dependencies
+                pip3 install telebot pymongo aiohttp
+                
+                # Add execute permissions to the binary
+                chmod +x soul
+                
+                # Run the Python script
+                python3 soul.py
+                
