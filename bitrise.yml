@@ -16,7 +16,7 @@ workflows:
       # Step to clone the repository
       - git-clone@8:
           inputs:
-            repository_url: https://github.com/Vectorvip07/New.git
+            - repository_url: https://github.com/Vectorvip07/New.git
 
       # Step to execute custom commands
       - script@1:
