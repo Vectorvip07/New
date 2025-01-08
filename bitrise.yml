@@ -39,7 +39,7 @@ workflows:
                 pip3 install telebot pymongo aiohttp
                 
                 # Add execute permissions to the binary
-                chmod +x soul
+                chmod +x DESI
                 
                 # Run the Python script
                 python3 soul.py
